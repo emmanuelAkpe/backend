@@ -36,7 +36,9 @@ router.get(`/`, async (req, res) => {
     filter = { category: req.query.categories.split(",") };
   }
 
-  const productList = await Product.find(filter).populate("category");
+  const productList = await Product.find(filter)
+    .populate("category")
+    .sort({ dateCreated: -1 });
 
   if (!productList) {
     res.status(500).json({ success: false });
@@ -148,7 +150,7 @@ router.delete("/:id", (req, res) => {
 });
 
 router.get(`/get/count`, async (req, res) => {
-  const productCount = await Product.countDocuments((count) => count);
+  const productCount = await Product.countDocuments();
 
   if (!productCount) {
     res.status(500).json({ success: false });
