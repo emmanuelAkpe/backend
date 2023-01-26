@@ -63,8 +63,7 @@ router.post(`/`, uploadOptions.single("image"), async (req, res) => {
   if (!file) return res.status(400).send("No image in the request");
 
   const fileName = file.filename;
-  const basePath = `https://kixara-backend.onrender.com/public/uploads/`;
-  // const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
+  const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
   let product = new Product({
     name: req.body.name,
     description: req.body.description,
@@ -203,3 +202,42 @@ router.put(
 );
 
 module.exports = router;
+
+// router.post("/", async (req, res) => {
+//   const category = await Category.findById(req.body.category);
+//   if (!category) return res.status(400).send("Invalid Category");
+
+//   const image = req.body.image;
+//   if (!image) return res.status(400).send("No image in the request");
+
+//   cloudinary.config({
+//     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+//     api_key: process.env.CLOUDINARY_API_KEY,
+//     api_secret: process.env.CLOUDINARY_API_SECRET,
+//   });
+
+//   const imageUploadResponse = await cloudinary.uploader.upload(image, {
+//     folder: "product-images",
+//   });
+//   const imageURL = imageUploadResponse.url;
+//   console.log(imageURL);
+//   let product = new Product({
+//     name: req.body.name,
+//     description: req.body.description,
+//     richDescription: req.body.richDescription,
+//     image: imageURL,
+//     brand: req.body.brand,
+//     price: req.body.price,
+//     category: req.body.category,
+//     countInStock: req.body.countInStock,
+//     rating: req.body.rating,
+//     numReviews: req.body.numReviews,
+//     isFeatured: req.body.isFeatured,
+//   });
+
+//   product = await product.save();
+
+//   if (!product) return res.status(500).send("The product cannot be created");
+
+//   res.send(product);
+// });
